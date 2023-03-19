@@ -19,7 +19,7 @@ class Square extends React.Component {
             setUnclickable: () => this.setUnclickable()
         };
         return (
-            <div className={`cell${this.isClickable ? " clickable" : ""}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }} key={this.props.id}>
+            <div className={`cell${(this.isClickable && (!this.gameEnd)) ? " clickable" : ""}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }} key={this.props.id}>
                 {this.props.value}
             </div>
         )
