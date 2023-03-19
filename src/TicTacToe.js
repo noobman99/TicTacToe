@@ -94,8 +94,14 @@ class Board extends React.Component {
         const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
         return (
-            <div className="board">
-                {arr.map((i) => this.squareConstruct(i))}
+            <div className="board-holder">
+                <div className="board-title">
+                    <span id="playermove">Player Move : </span>
+                    <span id="playermoveValue"> {this.Xmove ? "X" : "O"} </span>
+                </div>
+                <div className="board">
+                    {arr.map((i) => this.squareConstruct(i))}
+                </div>
             </div>
         )
     }
@@ -104,7 +110,7 @@ class Board extends React.Component {
 function Game() {
     return (
         <section className="game">
-            <div className="board-holder">
+            <div className="game-inner">
                 <Board />
             </div>
         </section>
