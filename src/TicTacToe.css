@@ -8,6 +8,9 @@
   height: 100vh;
   display: flex;
   background-color: rgb(200, 254, 254);
+  -webkit-user-select: none;
+  user-select: none;
+  -moz-user-select: none;
 }
 
 .game-inner {
