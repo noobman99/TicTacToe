@@ -17,22 +17,45 @@
     justify-content: center;
   }
 
-.board-title {
-  height: 5vw;
+.board-footer {
+  height: 4vw;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  background-color: rgb(10, 1, 40);
+  padding-right: 5%;
+  padding-left: 5%;
+  box-sizing: border-box;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
-span#playermove{
-  width: 0;
+.board-title {
+  height: 5vw;
+  width: 100%;
+  font-size: 5ch;
+  color: white;
+  background-color: rgb(10, 1, 40);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+span.tictoe{
+  color: rgb(0, 255, 255);
+}
+
+span#playermove, span#playermoveValue{
+  font-size: 3ch;
+  color: white;
 }
 
 span#playermoveValue {
-  height: 4vw;
-  width: 4vw;
-  color: white;
-  font-size: 3.5ch;
+  height: 3vw;
+  width: 3vw;
   background-color: black;
   border-style: double;
   border-color: rgb(0, 255, 255);
@@ -43,9 +66,9 @@ span#playermoveValue {
 
 .board {
     display: grid;
-    width: 25vw;
-    height: 25vw;
-    padding: 3vw;
+    width: 20vw;
+    height: 20vw;
+    padding: 1.5vw;
     row-gap: 8%;
     column-gap: 8%;
     grid-template-columns: 28% 28% 28%;
