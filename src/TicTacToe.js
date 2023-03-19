@@ -19,7 +19,7 @@ class Square extends React.Component {
             setUnclickable: () => this.setUnclickable()
         };
         return (
-            <div className={`cell${(this.isClickable && (!this.gameEnd)) ? " clickable" : ""}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }} key={this.props.id}>
+            <div className={`cell${this.isClickable ? " clickable" : ""}${(this.props.gameEnd || (!this.isClickable)) ? "" : " cellactive"}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }} key={this.props.id}>
                 {this.props.value}
             </div>
         )
@@ -40,7 +40,7 @@ class Board extends React.Component {
 
     squareConstruct(i) {
         return (
-            <Square value={this.state.boardBack[i]} id={i} handleClick={(sqr) => this.handleClick(sqr)} />
+            <Square value={this.state.boardBack[i]} id={i} handleClick={(sqr) => this.handleClick(sqr)} gameEnd={this.gameEnd} />
         )
     }
 

@@ -30,6 +30,7 @@
   background-color: rgb(10, 1, 40);
   padding-right: 5%;
   padding-left: 5%;
+  padding-bottom: 1%;
   box-sizing: border-box;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
@@ -55,8 +56,8 @@ span.tictoe{
 }
 
 span#playermoveValue {
-  height: 3vw;
-  width: 3vw;
+  height: 2.75vw;
+  width: 2.75vw;
   background-color: black;
   border-style: double;
   border-color: rgb(0, 255, 255);
@@ -104,6 +105,6 @@ span.winnerChar {
   border-color: rgb(37, 181, 209);
 }
 
-.clickable:hover{
+.cellactive:hover{
   border-color: rgb(0, 255, 255);
 }
