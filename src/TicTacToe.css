@@ -1,0 +1,24 @@
+
+.board-holder {
+    display: flex;
+    margin: auto 0;
+  }
+
+.board {
+    display: grid;
+    width: 50vw;
+    height: 50vw;
+    padding: 5vw;
+    row-gap: 5vw;
+    column-gap: 5vw;
+    justify-self: center;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+  }
+
+
+.cell {
+    border-style: double;
+    border-color: black;
+}
+
