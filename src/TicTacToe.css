@@ -1,7 +1,6 @@
 * {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 
 .game {
@@ -19,6 +18,7 @@
 
 .board-holder{
   border-radius: 15px;
+  box-shadow: 1.75vw 2.5vw 30px rgba(128, 128, 128, 0.708);
 }
 
 .board-footer {
@@ -86,7 +86,7 @@ span.winnerChar {
     grid-template-columns: 28% 28% 28%;
     grid-template-rows: 28% 28% 28%;
     background-color: rgb(10, 1, 40);
-  }
+}
 
 
 .cell {
