@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 class Square extends React.Component {
     constructor(props){
@@ -21,17 +21,39 @@ class Square extends React.Component {
 class Board extends React.Component{
     constructor(props){
         super(props);
-        this.XMove = true;
         this.Xpos = [];
         this.Opos = [];
-        this.gameEnd = false;
-        this.boardBack = Array(9).fill("");
+        this.state = {
+            XMove : true,
+            gameEnd : false,
+            boardBack : Array(9).fill("")
+        };
     }
 
     squareConstruct(i){
         return (
             <Square value={this.boardBack[i]} id={i}/>
         )
+    }
+
+    handleClick(square){
+        if (this.state.gameEnd || (!square.isClickable)){
+            return 0;
+        }
+        const boardcopy = this.state.boardBack.slice();
+        const Xmove = this.state.XMove;
+        boardcopy[square.id] = (Xmove ? "X" : "O");
+        (Xmove ? this.Xpos : this.Opos).push(square.id);
+        this.checkWin();
+        if (!this.state.gameEnd){
+            Xmove = !Xmove;
+        }
+        this.setState({
+            Xmove : Xmove,
+            gameEnd : this.state.gameEnd,
+            boardBack : boardcopy
+        });
+
     }
 
     render (){
