@@ -90,18 +90,35 @@ class Board extends React.Component {
         }
     }
 
+    renderFooter(){
+        if (this.gameEnd){
+            return (
+                <div className="board-footer gameResult">
+                    <span class="winnerChar">{this.Xmove ? "O" : "X"}</span><span>Won The Game</span>
+                </div>
+            )
+        } else {
+            return(
+                <div className="board-footer">
+                    <span id="playermove">Player Move : </span>
+                    <span id="playermoveValue"> {this.Xmove ? "X" : "O"} </span>
+                </div>
+                )
+        }
+    }
+
     render() {
         const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
         return (
             <div className="board-holder">
                 <div className="board-title">
-                    <span id="playermove">Player Move : </span>
-                    <span id="playermoveValue"> {this.Xmove ? "X" : "O"} </span>
+                    <span className="tictoe">Tic</span>Tac<span className="tictoe">Toe</span>
                 </div>
                 <div className="board">
                     {arr.map((i) => this.squareConstruct(i))}
                 </div>
+                {this.renderFooter()}
             </div>
         )
     }
