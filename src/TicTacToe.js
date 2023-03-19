@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ReactDOM from 'react-dom/client';
+import './TicTaCToe.css';
 
 class Square extends React.Component {
     constructor(props){
@@ -90,3 +92,22 @@ class Board extends React.Component{
         )
     }
 }
+
+class Game extends React.Component{
+    render () {
+        return(
+            <section className="game">
+                <div className="board-holder">
+                    <Board />
+                </div>
+            </section>
+        )
+    }
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Game />
+  </React.StrictMode>
+);
