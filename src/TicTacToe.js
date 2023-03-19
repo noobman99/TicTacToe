@@ -3,16 +3,21 @@ import React, { useState } from "react";
 class Square extends React.Component {
     constructor(props){
         super(props);
-        this.isClickable = true;
-        this.id = this.props.id;
-        this.value = this.props.value;
+        const [isClickable, setClickable] = useState(true);
+        this.isClickable = isClickable;
+        this.setClickable = setClickable;
     }
     render() {
         const rownum = 0;
         const colnum = (this.id%3 || 3);
+        const squaredat = {
+            isClickable : this.isClickable,
+            id : this.props.id,
+            setClickable : this.setClickable
+        };
         return (
-            <div className="cell" onClick={this.props.handleClick} style={{gridRow: rownum, gridColumn: colnum}}>
-                {this.value}
+            <div className="cell" onClick={() => this.props.handleClick(squaredat)} style={{gridRow: rownum, gridColumn: colnum}}>
+                {this.props.value}
             </div>
         )
     }
@@ -32,7 +37,7 @@ class Board extends React.Component{
 
     squareConstruct(i){
         return (
-            <Square value={this.boardBack[i]} id={i}/>
+            <Square value={this.boardBack[i]} id={i} handleClick={(sqr) => this.handleClick(sqr)}/>
         )
     }
 
@@ -44,6 +49,7 @@ class Board extends React.Component{
         const Xmove = this.state.XMove;
         boardcopy[square.id] = (Xmove ? "X" : "O");
         (Xmove ? this.Xpos : this.Opos).push(square.id);
+        square.setClickable(false);
         this.checkWin();
         if (!this.gameEnd){
             Xmove = !Xmove;
