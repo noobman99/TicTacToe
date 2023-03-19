@@ -1,20 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .game {
   width: 100vw;
   height: 100vh;
   display: flex;
 }
 
-.board-holder {
+.game-inner {
     display: flex;
     margin: auto 0;
     width: 100%;
     justify-content: center;
   }
 
+.board-title {
+  height: 5vw;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+span#playermove{
+  width: 0;
+}
+
+span#playermoveValue {
+  height: 4vw;
+  width: 4vw;
+  color: white;
+  font-size: 3.5ch;
+  background-color: black;
+  border-style: double;
+  border-color: rgb(0, 255, 255);
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
 .board {
     display: grid;
-    width: 30vw;
-    height: 30vw;
+    width: 25vw;
+    height: 25vw;
     padding: 3vw;
     row-gap: 8%;
     column-gap: 8%;
