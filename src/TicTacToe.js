@@ -23,9 +23,9 @@ class Board extends React.Component{
         super(props);
         this.Xpos = [];
         this.Opos = [];
+        this.gameEnd = false;
         this.state = {
             XMove : true,
-            gameEnd : false,
             boardBack : Array(9).fill("")
         };
     }
@@ -37,7 +37,7 @@ class Board extends React.Component{
     }
 
     handleClick(square){
-        if (this.state.gameEnd || (!square.isClickable)){
+        if (this.gameEnd || (!square.isClickable)){
             return 0;
         }
         const boardcopy = this.state.boardBack.slice();
@@ -45,15 +45,33 @@ class Board extends React.Component{
         boardcopy[square.id] = (Xmove ? "X" : "O");
         (Xmove ? this.Xpos : this.Opos).push(square.id);
         this.checkWin();
-        if (!this.state.gameEnd){
+        if (!this.gameEnd){
             Xmove = !Xmove;
         }
         this.setState({
             Xmove : Xmove,
-            gameEnd : this.state.gameEnd,
             boardBack : boardcopy
         });
+    }
 
+    checkWin(){
+        const winPos = [[1,2,3], [4,5,6], [7,8,9], [1,4,7], [2,5,8], [3,6,9], [1,5,9], [3,5,7]];
+        const playerMoves = (this.state.XMove ? this.Xpos : this.Opos);
+        for (let i in winPos){
+            let checkCounter = false;
+            for (let j in i){
+              if (playerMoves.includes(j)){
+                checkCounter = true;
+              } else {
+                checkCounter = false;
+                break;
+              }
+            }
+            if (checkCounter){
+              this.gameEnd = true;
+              break;
+            }
+          }
     }
 
     render (){
