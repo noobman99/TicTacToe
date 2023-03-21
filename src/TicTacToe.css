@@ -112,3 +112,45 @@ span.winnerChar {
 .cellactive:hover{
   border-color: rgb(0, 255, 255);
 }
+
+@media screen and (max-width: 850px) {
+  .board{
+    height: 40vw;
+    width: 40vw;
+    padding: 2vw;
+  }
+  .board-footer{
+    height: max-content;
+    padding-top: 2%;
+    padding-bottom: 5%;
+  }
+  .board-title{
+    height: max-content;
+    padding-top: 2%;
+  }
+  span#playermoveValue{
+    height: 4vw;
+    width: 4vw;
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .board{
+    height: 75vw;
+    width: 75vw;
+    padding: 4vw;
+  }
+  .board-footer{
+    height: max-content;
+    padding-top: 2%;
+    padding-bottom: 5%;
+  }
+  .board-title{
+    height: max-content;
+    padding-top: 2%;
+  }
+  span#playermoveValue{
+    height: 10vw;
+    width: 10vw;
+  }
+}
