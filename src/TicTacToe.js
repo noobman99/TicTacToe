@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+
+let [playerNames, setPlayerNames] = useState(["", ""]);
+let [score, setScore] = useState([0, 0]);
 
 class Square extends React.Component {
     constructor(props) {
@@ -96,6 +99,9 @@ class Board extends React.Component {
 
             if (checkCounter) {
                 this.gameEnd = true;
+                let scoredummy = score.slice();
+                scoredummy[(!this.state.Xmove) & 1] += 1;
+                setScore(scoredummy);
                 break;
             }
         }
@@ -135,6 +141,34 @@ class Board extends React.Component {
             </div>
         )
     }
+}
+
+function PlayerForm(){
+    let [p1C, setP1C] = useState(true);
+    let [p1N, setP1N] = useState("");
+    let [p2N, setP2N] = useState("");
+
+    const startgame = () => {
+        if (p1C) {
+            setPlayerNames([p1N , p2N]);
+        } else {
+            setPlayerNames([p2N, p1N]);
+        }
+    }
+
+    return (
+        <div className="player-form">
+            <form onSubmit={(e) => e.preventDefault} className="player-form">
+                <label className="playername">Player 1</label>
+                <input type="text" name="player1Name" id="p1N" value={p1N} onChange={(e) => setP1N(e.target.value)} />
+                <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "X" : "O"}</span>
+                <label className="playername">Player 1</label>
+                <input type="text" name="player2Name" id="p2N" value={p2N} onChange={(e) => setP2N(e.target.value)} />
+                <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "O" : "X"}</span>
+                <button className="startGame" onClick={startgame()}>Start Game</button>
+            </form>
+        </div>
+    )
 }
 
 function Game() {
