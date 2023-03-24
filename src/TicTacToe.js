@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-let [playerNames, setPlayerNames] = useState(["", ""]);
-let [score, setScore] = useState([0, 0]);
+let playerNames = ["Jay", "Viru"];
 
 class Square extends React.Component {
     constructor(props) {
@@ -41,11 +40,13 @@ class Board extends React.Component {
         super(props);
         this.Xpos = []; // positions of X
         this.Opos = []; // positions of O
-        this.gameEnd = false;
+        this.gameEnd = [false, false]; //[gameend, draw?]
 
         // to refresh the component upon change, boardBack was added in state
         this.state = {
-            Xmove : true
+            Xmove : true,
+            boardBack : Array(9).fill(""),
+            score : [0, 0]
         };
     }
 
@@ -57,7 +58,7 @@ class Board extends React.Component {
 
     handleClick(square) {
         // to check if a move is valid or not
-        if (this.gameEnd || (!square.isClickable)) {
+        if (this.gameEnd[0] || (!square.isClickable)) {
             return 0;
         }
         // updating the move into class variables
@@ -67,10 +68,16 @@ class Board extends React.Component {
             this.Opos.push(square.id);
         }
 
+        let newboard = this.state.boardBack.slice();
+
         square.setUnclickable((this.state.Xmove ? "X" : "O"));  // set square to unclickable
         this.checkWin();  // to check if the game has ended
 
-        this.setState({ Xmove : !this.state.Xmove});// switch moves and refresh footer
+        this.setState({ 
+            Xmove : !this.state.Xmove,
+            boardBack : newboard,
+            score : this.state.score
+        });// switch moves and refresh footer
     }
 
     checkWin() {
@@ -98,28 +105,49 @@ class Board extends React.Component {
             }
 
             if (checkCounter) {
-                this.gameEnd = true;
-                let scoredummy = score.slice();
+                this.gameEnd = [true, false];
+                let scoredummy = this.state.score.slice();
                 scoredummy[(!this.state.Xmove) & 1] += 1;
-                setScore(scoredummy);
+                console.log(scoredummy);
+                this.setState({
+                    score : scoredummy,
+                    Xmove : this.state.Xmove,
+                    boardBack : this.state.boardBack,
+                }
+                );
                 break;
             }
+        }
+
+        if ((this.Opos.length + this.Xpos.length)===9 && (!this.gameEnd[0])){
+            this.gameEnd = [true, true];
         }
     }
 
     renderFooter(){
-        if (this.gameEnd){
+        if (this.gameEnd[0]){
             // footer for when game has ended
-            return (
-                <div className="board-footer gameResult">
-                    <span className="winnerChar">{this.state.Xmove ? "O" : "X"}</span><span>Won The Game</span>
-                </div>
-            )
+            console.log(this.state.score);
+            if (this.gameEnd[1]){
+                // if game has tied
+                return (
+                    <div className="board-footer gameResult">
+                        The game is <span className="winnerChar">tied!</span>
+                    </div>
+                )
+            } else {
+                // if a player won the game
+                return (
+                    <div className="board-footer gameResult">
+                        <span className="winnerChar">{playerNames[(this.state.Xmove) & 1]}</span> Won The Game.
+                    </div>
+                )
+            }
         } else {
             // footer showing game state
             return(
                 <div className="board-footer">
-                    <span id="playermove">Player Move : </span>
+                    <span id="playermove">{playerNames[(!this.state.Xmove) & 1]}'s Move : </span>
                     <span id="playermoveValue"> {this.state.Xmove ? "X" : "O"} </span>
                 </div>
                 )
@@ -150,9 +178,9 @@ function PlayerForm(){
 
     const startgame = () => {
         if (p1C) {
-            setPlayerNames([p1N , p2N]);
+            playerNames = [p1N , p2N];
         } else {
-            setPlayerNames([p2N, p1N]);
+            playerNames = [p2N, p1N];
         }
     }
 
