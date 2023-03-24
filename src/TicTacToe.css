@@ -78,7 +78,7 @@ div.board-footer.gameResult{
 span.winnerChar {
   color: rgb(0, 183, 255);
   margin-right: 1ch;
-  font-size: 140%;
+  margin-left: 1ch;
 }
 
 .board {
