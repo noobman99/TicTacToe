@@ -133,6 +133,60 @@ span.winnerChar {
   box-shadow: 0.75vw 0.75vw 20px rgba(128, 128, 128, 0.8);
 }
 
+div.player-form {
+  width: 20vw;
+  height: 20vw;
+  padding: 1.5vw;
+  background-color: rgb(10, 1, 40);
+  color: white;
+  font-size: 3ch;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+form.player-form {
+  width: 20vw;
+  height: 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+div.playerinfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.player-form input{
+  margin: auto 0;
+  font-size: 2.3cqh;
+  width: 14vw;
+  padding: 0.5ch 1ch;
+}
+
+.form-button {
+  display: flex;
+  justify-content: center;
+}
+
+.startGame {
+  height: 3vw;
+  padding: 0.5ch 1.5ch;
+  font-size: 2cqh;
+  border-radius: 10px;
+  font-weight: 600;
+  color: rgb(0, 255, 255);
+  background-color: black;
+  border-style: double;
+  border-color: rgb(37, 181, 209);
+}
+.startGame:hover{
+  color: black;
+  background-color: rgb(0, 255, 255);
+  border-color: rgb(30, 142, 164);
+}
+
 @media screen and (max-width: 850px) {
   .board{
     height: 40vw;

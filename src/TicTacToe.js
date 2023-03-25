@@ -191,13 +191,23 @@ function PlayerForm(){
     return (
         <div className="player-form">
             <form onSubmit={(e) => e.preventDefault()} className="player-form">
-                <label className="playername">Player 1</label>
-                <input type="text" name="player1Name" id="p1N" value={p1N} onChange={(e) => setP1N(e.target.value)} />
-                <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "X" : "O"}</span>
-                <label className="playername">Player 2</label>
-                <input type="text" name="player2Name" id="p2N" value={p2N} onChange={(e) => setP2N(e.target.value)} />
-                <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "O" : "X"}</span>
-                <Link><button className="startGame" onClick={() => startgame()}>Start Game</button></Link>
+                <div>
+                    <label className="playername">Player 1</label>
+                    <div className="playerinfo">
+                        <input type="text" name="player1Name" id="p1N" value={p1N} onChange={(e) => setP1N(e.target.value)} />
+                        <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "X" : "O"}</span>
+                    </div>
+                </div>
+                <div>
+                    <label className="playername">Player 2</label>
+                    <div className="playerinfo">
+                        <input type="text" name="player2Name" id="p2N" value={p2N} onChange={(e) => setP2N(e.target.value)} />
+                        <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "O" : "X"}</span>
+                    </div>
+                </div>
+                <div className="form-button">
+                    <Link><button className="startGame" onClick={() => startgame()}>Start Game</button></Link>
+                </div>
             </form>
         </div>
     )
