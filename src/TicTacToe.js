@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 
 let playerNames = ["Jay", "Viru"];
 
@@ -73,11 +74,11 @@ class Board extends React.Component {
         square.setUnclickable((this.state.Xmove ? "X" : "O"));  // set square to unclickable
         this.checkWin();  // to check if the game has ended
 
-        this.setState({ 
-            Xmove : !this.state.Xmove,
+        this.setState((state) => {return { 
+            Xmove : !state.Xmove,
             boardBack : newboard,
-            score : this.state.score
-        });// switch moves and refresh footer
+            score : state.score
+        }});// switch moves and refresh footer
     }
 
     checkWin() {
@@ -105,7 +106,6 @@ class Board extends React.Component {
             }
 
             if (checkCounter) {
-                this.gameEnd = [true, false];
                 let scoredummy = this.state.score.slice();
                 scoredummy[(!this.state.Xmove) & 1] += 1;
                 console.log(scoredummy);
@@ -113,8 +113,8 @@ class Board extends React.Component {
                     score : scoredummy,
                     Xmove : this.state.Xmove,
                     boardBack : this.state.boardBack,
-                }
-                );
+                });
+                this.gameEnd = [true, false];
                 break;
             }
         }
@@ -132,14 +132,14 @@ class Board extends React.Component {
                 // if game has tied
                 return (
                     <div className="board-footer gameResult">
-                        The game is <span className="winnerChar">tied!</span>
+                        The game is <span className="winnerChar">Tied!</span>
                     </div>
                 )
             } else {
                 // if a player won the game
                 return (
                     <div className="board-footer gameResult">
-                        <span className="winnerChar">{playerNames[(this.state.Xmove) & 1]}</span> Won The Game.
+                        <span className="winnerChar">{playerNames[(this.state.Xmove) & 1]}</span> Won the game.
                     </div>
                 )
             }
@@ -158,10 +158,7 @@ class Board extends React.Component {
         const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];  // to use map function and create 9 gridcells
 
         return (
-            <div className="board-holder">
-                <div className="board-title">
-                    <span className="tictoe">Tic</span>Tac<span className="tictoe">Toe</span>
-                </div>
+            <div className="boardholder-inner">
                 <div className="board">
                     {arr.map((i) => this.squareConstruct(i))}
                 </div>
@@ -182,30 +179,42 @@ function PlayerForm(){
         } else {
             playerNames = [p2N, p1N];
         }
+        console.log(playerNames);
     }
 
     return (
         <div className="player-form">
-            <form onSubmit={(e) => e.preventDefault} className="player-form">
+            <form onSubmit={(e) => e.preventDefault()} className="player-form">
                 <label className="playername">Player 1</label>
                 <input type="text" name="player1Name" id="p1N" value={p1N} onChange={(e) => setP1N(e.target.value)} />
                 <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "X" : "O"}</span>
-                <label className="playername">Player 1</label>
+                <label className="playername">Player 2</label>
                 <input type="text" name="player2Name" id="p2N" value={p2N} onChange={(e) => setP2N(e.target.value)} />
                 <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "O" : "X"}</span>
-                <button className="startGame" onClick={startgame()}>Start Game</button>
+                <Link><button className="startGame" onClick={() => startgame()}>Start Game</button></Link>
             </form>
         </div>
     )
 }
 
+
 function Game() {
     return (
-        <section className="game">
-            <div className="game-inner">
-                <Board />
-            </div>
-        </section>
+        <Router>
+            <section className="game">
+                <div className="game-inner">
+                    <div className="board-holder">
+                        <div className="board-title">
+                            <span className="tictoe">Tic</span>Tac<span className="tictoe">Toe</span>
+                        </div>
+                        <Routes>
+                            <Route path="/game" element={<Board />} />
+                            <Route path="/" element={<PlayerForm />} />
+                        </Routes>
+                    </div>
+                </div>
+            </section>
+        </Router>
     )
 }
 
