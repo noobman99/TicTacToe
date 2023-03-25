@@ -6,7 +6,6 @@ let playerNames = ["Jay", "Viru"];
 class Square extends React.Component {
     constructor(props) {
         super(props);  // required before using this property
-        this.isClickable = !Boolean(this.props.value);
     }
 
     render() {
@@ -14,13 +13,13 @@ class Square extends React.Component {
         const colnum = (this.props.id % 3 || 3);
         // data set for handleClick function
         const squaredat = {
-            isClickable : this.isClickable,
+            isClickable : !Boolean(this.props.value),
             id: this.props.id,
         };
 
         return (
             // clickable - for styling and check, cellactive - for hover effect
-            <div className={`cell${this.isClickable ? " clickable" : ""}${(this.props.gameEnd || (!this.isClickable)) ? "" : " cellactive"}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }}>
+            <div className={`cell${(!this.props.gameEnd && !Boolean(this.props.value)) ? " clickable" : ""}${(this.props.gameEnd || (Boolean(this.props.value))) ? "" : " cellactive"}${(this.props.winSqr ? " winSqr" : "")}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }}>
                 {this.props.value}
             </div>
         )
@@ -38,13 +37,14 @@ class Board extends React.Component {
         this.state = {
             Xmove : true,
             boardBack : Array(9).fill(""),
-            score : [0, 0]
+            score : [0, 0],
+            winningPos : []
         };
     }
 
     squareConstruct(i) {
         return (
-            <Square id={i} handleClick={(sqr) => this.handleClick(sqr)} gameEnd={this.gameEnd[0]} value={this.state.boardBack[i-1]} key={i} />
+            <Square id={i} handleClick={(sqr) => this.handleClick(sqr)} gameEnd={this.gameEnd[0]} value={this.state.boardBack[i-1]} winSqr={this.state.winningPos.includes(i)} key={i} />
         )
     }
 
@@ -69,7 +69,8 @@ class Board extends React.Component {
             return { 
             Xmove : !state.Xmove,
             boardBack : newboard,
-            score : state.score
+            score : state.score,
+            winningPos : state.winningPos
         }});// switch moves and refresh footer
     }
 
@@ -106,6 +107,7 @@ class Board extends React.Component {
                     score : scoredummy,
                     Xmove : this.state.Xmove,
                     boardBack : this.state.boardBack,
+                    winningPos : winPos[i]
                 });
                 this.gameEnd = [true, false];
                 break;
@@ -126,7 +128,8 @@ class Board extends React.Component {
             return {
                 Xmove : state.Xmove,
                 boardBack : Array(9).fill(""),
-                score : state.score
+                score : state.score,
+                winningPos : []
             }
         });
     }
