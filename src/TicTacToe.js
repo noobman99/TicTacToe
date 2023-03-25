@@ -148,7 +148,7 @@ class Board extends React.Component {
             return(
                 <div className="board-footer">
                     <span id="playermove">{playerNames[(!this.state.Xmove) & 1]}'s Move : </span>
-                    <span id="playermoveValue"> {this.state.Xmove ? "X" : "O"} </span>
+                    <span className="playermoveValue"> {this.state.Xmove ? "X" : "O"} </span>
                 </div>
                 )
         }
@@ -163,6 +163,12 @@ class Board extends React.Component {
                     {arr.map((i) => this.squareConstruct(i))}
                 </div>
                 {this.renderFooter()}
+                <div className="scoreboard">
+                    <span className="playermoveValue" style={{gridRow:1, gridColumn:2}}>{this.state.score[0]}</span>
+                    <span className="playermoveValue" style={{gridRow:1, gridColumn:4}}>{this.state.score[1]}</span>
+                    <span className="playerName" style={{gridRow:2, gridColumn:2}}>{playerNames[0]}</span>
+                    <span className="playerName" style={{gridRow:2, gridColumn:4}}>{playerNames[1]}</span>
+                </div>
             </div>
         )
     }

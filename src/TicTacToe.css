@@ -59,7 +59,8 @@ span.tictoe{
   color: rgb(0, 255, 255);
 }
 
-span#playermoveValue {
+span.playermoveValue {
+  color: white;
   height: 2.75vw;
   width: 2.75vw;
   background-color: black;
@@ -111,6 +112,25 @@ span.winnerChar {
 
 .cellactive:hover{
   border-color: rgb(0, 255, 255);
+}
+
+.scoreboard {
+  position: fixed;
+  top: 1vw;
+  right: 1vw;
+  width: 10vw;
+  padding: 1vw 0;
+  display: grid;
+  row-gap: 4%;
+  grid-template-columns: 10% auto 10% auto 10%;
+  grid-template-rows: auto auto;
+  justify-items: center;
+  background-color: rgb(10, 1, 40);
+  border-radius: 15px;
+  box-sizing: border-box;
+  color: white;
+  font-size: 2.2ch;
+  box-shadow: 0.75vw 0.75vw 20px rgba(128, 128, 128, 0.8);
 }
 
 @media screen and (max-width: 850px) {
