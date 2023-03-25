@@ -1,20 +1,12 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Link, Route, Routes, useParams } from "react-router-dom";
 
 let playerNames = ["Jay", "Viru"];
 
 class Square extends React.Component {
     constructor(props) {
         super(props);  // required before using this property
-        this.isClickable = true;
-        this.state = {
-            value : ""
-        };
-    }
-
-    setUnclickable(val){ // to export unclickable function to handleClick
-        this.isClickable = false;
-        this.setState({value : val});
+        this.isClickable = !Boolean(this.props.value);
     }
 
     render() {
@@ -22,15 +14,14 @@ class Square extends React.Component {
         const colnum = (this.props.id % 3 || 3);
         // data set for handleClick function
         const squaredat = {
-            isClickable: this.isClickable,
+            isClickable : this.isClickable,
             id: this.props.id,
-            setUnclickable: (val) => this.setUnclickable(val)
         };
 
         return (
             // clickable - for styling and check, cellactive - for hover effect
-            <div key={String(this.props.id)} className={`cell${this.isClickable ? " clickable" : ""}${(this.props.gameEnd || (!this.isClickable)) ? "" : " cellactive"}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }}>
-                {this.state.value}
+            <div className={`cell${this.isClickable ? " clickable" : ""}${(this.props.gameEnd || (!this.isClickable)) ? "" : " cellactive"}`} onClick={() => this.props.handleClick(squaredat)} style={{ gridRow: rownum, gridColumn: colnum }}>
+                {this.props.value}
             </div>
         )
     }
@@ -53,7 +44,7 @@ class Board extends React.Component {
 
     squareConstruct(i) {
         return (
-            <Square id={i} handleClick={(sqr) => this.handleClick(sqr)} gameEnd={this.gameEnd} />
+            <Square id={i} handleClick={(sqr) => this.handleClick(sqr)} gameEnd={this.gameEnd[0]} value={this.state.boardBack[i-1]} key={i} />
         )
     }
 
@@ -69,12 +60,13 @@ class Board extends React.Component {
             this.Opos.push(square.id);
         }
 
-        let newboard = this.state.boardBack.slice();
-
-        square.setUnclickable((this.state.Xmove ? "X" : "O"));  // set square to unclickable
         this.checkWin();  // to check if the game has ended
 
-        this.setState((state) => {return { 
+        this.setState((state) => {
+            let newboard = state.boardBack.slice();
+            newboard[square.id-1] = (state.Xmove ? "X" : "O");
+            
+            return { 
             Xmove : !state.Xmove,
             boardBack : newboard,
             score : state.score
@@ -106,6 +98,7 @@ class Board extends React.Component {
             }
 
             if (checkCounter) {
+                // update scores
                 let scoredummy = this.state.score.slice();
                 scoredummy[(!this.state.Xmove) & 1] += 1;
                 console.log(scoredummy);
@@ -124,22 +117,47 @@ class Board extends React.Component {
         }
     }
 
+    replay(){
+        // set board in initial state
+        this.Opos = [];
+        this.Xpos = [];
+        this.gameEnd = [false, false];
+        this.setState((state) => {
+            return {
+                Xmove : state.Xmove,
+                boardBack : Array(9).fill(""),
+                score : state.score
+            }
+        });
+    }
+
     renderFooter(){
         if (this.gameEnd[0]){
             // footer for when game has ended
-            console.log(this.state.score);
+            const buttondiv = (
+                <div className="buttonHolder">
+                    <button className="controlButton" onClick={() => this.replay()}>Play Again</button>
+                    <button className="controlButton">Quit</button>
+                </div>
+            );
             if (this.gameEnd[1]){
                 // if game has tied
                 return (
-                    <div className="board-footer gameResult">
-                        The game is <span className="winnerChar">Tied!</span>
+                    <div className="boardFooter2">
+                        {buttondiv}
+                        <div className="gameResult">
+                            The match is <span className="winnerChar">Tied!</span>
+                        </div>
                     </div>
                 )
             } else {
                 // if a player won the game
                 return (
-                    <div className="board-footer gameResult">
-                        <span className="winnerChar">{playerNames[(this.state.Xmove) & 1]}</span> Won the game.
+                    <div className="boardFooter2">
+                        {buttondiv}
+                        <div className="gameResult">
+                            <span className="winnerChar">{playerNames[(this.state.Xmove) & 1]}</span> Won the match.
+                        </div>
                     </div>
                 )
             }
@@ -213,7 +231,6 @@ function PlayerForm(){
     )
 }
 
-
 function Game() {
     return (
         <Router>
@@ -224,7 +241,7 @@ function Game() {
                             <span className="tictoe">Tic</span>Tac<span className="tictoe">Toe</span>
                         </div>
                         <Routes>
-                            <Route path="/game" element={<Board />} />
+                            <Route path="/game" element={<Board params={useParams()}/>} />
                             <Route path="/" element={<PlayerForm />} />
                         </Routes>
                     </div>
