@@ -198,7 +198,7 @@ function PlayerForm(){
 
     const startGame = () => {
         if (p1N && p2N){
-            navigate(`/game?${createSearchParams({p1N : p1N, p2N : p2N, p1C : p1C ? "1" : "0"})}`);
+            navigate(`/TicTacToe/game?${createSearchParams({p1N : p1N, p2N : p2N, p1C : p1C ? "1" : "0"})}`);
         }
     }
 
@@ -245,8 +245,8 @@ function Game() {
                             <span className="tictoe">Tic</span>Tac<span className="tictoe">Toe</span>
                         </div>
                         <Routes>
-                            <Route path="/game" element={<BoardWrap />} />
-                            <Route path="/" element={<PlayerForm />} />
+                            <Route path="TicTacToe/game" element={<BoardWrap />} />
+                            <Route path="/TicTacToe" element={<PlayerForm />} />
                         </Routes>
                     </div>
                 </div>
