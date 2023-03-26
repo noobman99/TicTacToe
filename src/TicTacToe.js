@@ -1,13 +1,7 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Link, Route, Routes, useParams } from "react-router-dom";
-
-let playerNames = ["Jay", "Viru"];
+import { BrowserRouter as Router, Link, Route, Routes, createSearchParams, useSearchParams, useNavigate} from "react-router-dom";
 
 class Square extends React.Component {
-    constructor(props) {
-        super(props);  // required before using this property
-    }
-
     render() {
         const rownum = (this.props.id - (this.props.id % 3 || 3))/3 + 1;
         const colnum = (this.props.id % 3 || 3);
@@ -32,6 +26,7 @@ class Board extends React.Component {
         this.Xpos = []; // positions of X
         this.Opos = []; // positions of O
         this.gameEnd = [false, false]; //[gameend, draw?]
+        this.playerNames = (this.props.p1C === "1") ? [this.props.p1N , this.props.p2N] : [this.props.p2N, this.props.p1N];
 
         // to refresh the component upon change, boardBack was added in state
         this.state = {
@@ -140,7 +135,7 @@ class Board extends React.Component {
             const buttondiv = (
                 <div className="buttonHolder">
                     <button className="controlButton" onClick={() => this.replay()}>Play Again</button>
-                    <button className="controlButton">Quit</button>
+                    <Link to="/"><button className="controlButton">Quit</button></Link>
                 </div>
             );
             if (this.gameEnd[1]){
@@ -159,7 +154,7 @@ class Board extends React.Component {
                     <div className="boardFooter2">
                         {buttondiv}
                         <div className="gameResult">
-                            <span className="winnerChar">{playerNames[(this.state.Xmove) & 1]}</span> Won the match.
+                            <span className="winnerChar">{this.playerNames[(this.state.Xmove) & 1]}</span> Won the match.
                         </div>
                     </div>
                 )
@@ -168,7 +163,7 @@ class Board extends React.Component {
             // footer showing game state
             return(
                 <div className="board-footer">
-                    <span id="playermove">{playerNames[(!this.state.Xmove) & 1]}'s Move : </span>
+                    <span id="playermove">{this.playerNames[(!this.state.Xmove) & 1]}'s Move : </span>
                     <span className="playermoveValue"> {this.state.Xmove ? "X" : "O"} </span>
                 </div>
                 )
@@ -187,8 +182,8 @@ class Board extends React.Component {
                 <div className="scoreboard">
                     <span className="playermoveValue" style={{gridRow:1, gridColumn:2}}>{this.state.score[0]}</span>
                     <span className="playermoveValue" style={{gridRow:1, gridColumn:4}}>{this.state.score[1]}</span>
-                    <span className="playerName" style={{gridRow:2, gridColumn:2}}>{playerNames[0]}</span>
-                    <span className="playerName" style={{gridRow:2, gridColumn:4}}>{playerNames[1]}</span>
+                    <span className="playerName" style={{gridRow:2, gridColumn:2}}>{this.playerNames[0]}</span>
+                    <span className="playerName" style={{gridRow:2, gridColumn:4}}>{this.playerNames[1]}</span>
                 </div>
             </div>
         )
@@ -199,14 +194,12 @@ function PlayerForm(){
     let [p1C, setP1C] = useState(true);
     let [p1N, setP1N] = useState("");
     let [p2N, setP2N] = useState("");
+    const navigate = useNavigate();
 
-    const startgame = () => {
-        if (p1C) {
-            playerNames = [p1N , p2N];
-        } else {
-            playerNames = [p2N, p1N];
+    const startGame = () => {
+        if (p1N && p2N){
+            navigate(`/game?${createSearchParams({p1N : p1N, p2N : p2N, p1C : p1C ? "1" : "0"})}`);
         }
-        console.log(playerNames);
     }
 
     return (
@@ -215,23 +208,31 @@ function PlayerForm(){
                 <div>
                     <label className="playername">Player 1</label>
                     <div className="playerinfo">
-                        <input type="text" name="player1Name" id="p1N" value={p1N} onChange={(e) => setP1N(e.target.value)} />
+                        <input type="text" name="player1Name" id="p1N" value={p1N} onChange={(e) => setP1N(e.target.value)} required />
                         <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "X" : "O"}</span>
                     </div>
                 </div>
                 <div>
                     <label className="playername">Player 2</label>
                     <div className="playerinfo">
-                        <input type="text" name="player2Name" id="p2N" value={p2N} onChange={(e) => setP2N(e.target.value)} />
+                        <input type="text" name="player2Name" id="p2N" value={p2N} onChange={(e) => setP2N(e.target.value)} required />
                         <span className="playermoveValue" onClick={() => setP1C(!p1C)}>{p1C ? "O" : "X"}</span>
                     </div>
                 </div>
                 <div className="form-button">
-                    <Link><button className="startGame" onClick={() => startgame()}>Start Game</button></Link>
+                    <button className="startGame" onClick={() => startGame()}>Start Game</button>
                 </div>
             </form>
         </div>
     )
+}
+
+function BoardWrap(){
+    const [searchParams, setSearchParams] = useSearchParams();
+    const p1N = searchParams.get("p1N");
+    const p2N = searchParams.get("p2N");
+    const p1C = searchParams.get("p1C")
+    return (<Board p1N={p1N} p2N={p2N} p1C={p1C}/>)
 }
 
 function Game() {
@@ -244,7 +245,7 @@ function Game() {
                             <span className="tictoe">Tic</span>Tac<span className="tictoe">Toe</span>
                         </div>
                         <Routes>
-                            <Route path="/game" element={<Board params={useParams()}/>} />
+                            <Route path="/game" element={<BoardWrap />} />
                             <Route path="/" element={<PlayerForm />} />
                         </Routes>
                     </div>
