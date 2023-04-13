@@ -135,7 +135,7 @@ class Board extends React.Component {
             const buttondiv = (
                 <div className="buttonHolder">
                     <button className="controlButton" onClick={() => this.replay()}>Play Again</button>
-                    <Link to="/"><button className="controlButton">Quit</button></Link>
+                    <Link to="/TicTacToe"><button className="controlButton">Quit</button></Link>
                 </div>
             );
             if (this.gameEnd[1]){
@@ -245,7 +245,7 @@ function Game() {
                             <span className="tictoe">Tic</span>Tac<span className="tictoe">Toe</span>
                         </div>
                         <Routes>
-                            <Route path="TicTacToe/game" element={<BoardWrap />} />
+                            <Route path="/TicTacToe/game" element={<BoardWrap />} />
                             <Route path="/TicTacToe" element={<PlayerForm />} />
                         </Routes>
                     </div>

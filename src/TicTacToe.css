@@ -26,7 +26,7 @@
 }
 
 .board-footer , .gameResult {
-  height: 4vw;
+  height: max-content;
   width: 100%;
   display: flex;
   align-items: center;
@@ -34,7 +34,7 @@
   background-color: rgb(10, 1, 40);
   padding-right: 5%;
   padding-left: 5%;
-  padding-bottom: 1%;
+  padding-bottom: 4%;
   box-sizing: border-box;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
@@ -61,8 +61,8 @@ span.tictoe{
 
 span.playermoveValue {
   color: white;
-  height: 2.75vw;
-  width: 2.75vw;
+  height: 3.1ch;
+  width: 3.1ch;
   background-color: black;
   border-style: double;
   border-color: rgb(0, 255, 255);
@@ -165,7 +165,7 @@ div.playerinfo {
 .player-form input{
   margin: auto 0;
   font-size: 2.3cqh;
-  width: 14vw;
+  width: calc(80% - 3.2ch);
   padding: 0.5ch 1ch;
 }
 
@@ -184,7 +184,7 @@ div.playerinfo {
   border-color: rgb(37, 181, 209);
 }
 .startGame {
-  height: 3vw;
+  height: 4ch;
   font-size: 2cqh;
 }
 .startGame:hover, .controlButton:hover{
@@ -211,6 +211,13 @@ button.controlButton {
     width: 40vw;
     padding: 2vw;
   }
+  div.player-form, form.player-form{
+    height: 40vw;
+    width: 40vw;
+  }
+  div.player-form{
+    padding: 2vw;
+  }
   .board-footer{
     height: max-content;
     padding-top: 2%;
@@ -231,6 +238,13 @@ button.controlButton {
     height: 75vw;
     width: 75vw;
     padding: 4vw;
+  }
+  div.player-form, form.player-form{
+    height: 75vw;
+    width: 75vw;
+  }
+  div.player-form{
+    padding: 3vw;
   }
   .board-footer{
     height: max-content;
