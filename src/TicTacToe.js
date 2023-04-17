@@ -180,10 +180,10 @@ class Board extends React.Component {
                 </div>
                 {this.renderFooter()}
                 <div className="scoreboard">
-                    <span className="playermoveValue" style={{gridRow:1, gridColumn:2}}>{this.state.score[0]}</span>
-                    <span className="playermoveValue" style={{gridRow:1, gridColumn:4}}>{this.state.score[1]}</span>
-                    <span className="playerName" style={{gridRow:2, gridColumn:2}}>{this.playerNames[0]}</span>
-                    <span className="playerName" style={{gridRow:2, gridColumn:4}}>{this.playerNames[1]}</span>
+                    <span className="playermoveValue" style={{gridRow:1, gridColumn:1}}>{this.state.score[0]}</span>
+                    <span className="playermoveValue" style={{gridRow:1, gridColumn:2}}>{this.state.score[1]}</span>
+                    <span className="playerName" style={{gridRow:2, gridColumn:1}}>{this.playerNames[0]}</span>
+                    <span className="playerName" style={{gridRow:2, gridColumn:2}}>{this.playerNames[1]}</span>
                 </div>
             </div>
         )

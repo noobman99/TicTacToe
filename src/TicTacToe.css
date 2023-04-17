@@ -122,12 +122,10 @@ span.winnerChar {
   position: fixed;
   top: 1vw;
   right: 1vw;
-  width: 10vw;
-  padding: 1vw 0;
+  padding: 1ch 1.5ch;
   display: grid;
   row-gap: 4%;
-  grid-template-columns: 10% auto 10% auto 10%;
-  grid-template-rows: auto auto;
+  column-gap: 1ch;
   justify-items: center;
   background-color: rgb(10, 1, 40);
   border-radius: 15px;
